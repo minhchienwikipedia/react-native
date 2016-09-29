@@ -5,9 +5,9 @@ import {
 
 var NavigationBarRouteMapper = {
   LeftButton: function(route, navigator, index) {
-    if(index == 0){
-      return null;
-    }
+    // if(index == 0){
+    //   return null;
+    // }
     if(route.name=='Login' || route.name=='Dashboard'){
       return null;
     }

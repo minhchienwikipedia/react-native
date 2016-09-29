@@ -43,7 +43,7 @@ class loginView extends Component{
   }
 
   admin(){
-    this.props.navigator.replace({
+    this.props.navigator.push({
       title: 'Dashbroad',
       name: 'Dashbroad',
       passProps: {}
