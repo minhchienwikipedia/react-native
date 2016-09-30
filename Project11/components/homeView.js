@@ -20,18 +20,6 @@ class homeView extends Component{
     }
   }
 
-    getRovers(){
-      var url='http://booktour.esy.es/api/danhsachdiemden.php';
-      return fetch(url).then((res)=> res.json());
-    }
-
-  componentWillMount(){
-    getRovers().then((res)=>{
-      this.setState({
-        rovers: res.rovers
-      })
-    })
-  }
   navigate(routeName){
     this.props.navigator.replace({
       name: routeName
@@ -45,7 +33,6 @@ class homeView extends Component{
       <View style={style.container}>
         <Text style={style.title}>Welcome Friend</Text>
         <Text style={style.text}>You are {this.state.accessToken}</Text>
-        <Text style={style.text}>JSON: {this.state.rovers}</Text>
 
         <TouchableOpacity onPress={this.navigate.bind(this,'root')} style={style.button}>
           <Text style={style.textButton}>Logout</Text>
