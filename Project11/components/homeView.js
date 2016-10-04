@@ -7,7 +7,8 @@ import{
   StyleSheet,
   Alert,
   Image,
-  TextInput
+  TextInput,
+  Dimensions
 }from 'react-native';
 
 const ACCESS_TOKEN = 'access_token';
@@ -32,7 +33,7 @@ class homeView extends Component{
 
       <View style={style.container}>
         <Text style={style.title}>Welcome Friend</Text>
-        <Text style={style.text}>You are {this.state.accessToken}</Text>
+        <Text style={style.text}>You are {this.state.accessToken} </Text>
 
         <TouchableOpacity onPress={this.navigate.bind(this,'root')} style={style.button}>
           <Text style={style.textButton}>Logout</Text>
@@ -44,7 +45,11 @@ class homeView extends Component{
 
 }
 
+var h = Dimensions.get('window').height;
+var w = Dimensions.get('window').width;
+
 const style = StyleSheet.create({
+
     container: {
       flex: 1,
       alignItems: 'center',
@@ -60,7 +65,7 @@ const style = StyleSheet.create({
       justifyContent: 'center'
     },
     button: {
-      width:200,
+      width: 200,
       height:30,
       backgroundColor: '#3498db',
       justifyContent: 'center',

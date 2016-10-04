@@ -7,7 +7,8 @@ import{
   StyleSheet,
   Alert,
   Image,
-  TextInput
+  TextInput,
+  Dimensions
 }from 'react-native';
 
 class loginView extends Component{
@@ -41,7 +42,8 @@ class loginView extends Component{
   }
 
 }
-
+var h = Dimensions.get('window').height;
+var w = Dimensions.get('window').width - 30;
 const style = StyleSheet.create({
     container: {
       flex: 1,
@@ -59,7 +61,7 @@ const style = StyleSheet.create({
       borderColor: '#48bbec'
     },
     button: {
-      width:200,
+      width:w,
       height:30,
       backgroundColor: '#3498db',
       justifyContent: 'center',

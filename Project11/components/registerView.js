@@ -30,7 +30,7 @@ class registerView extends Component{
     })
   }
 
-  onRegisterPressed(){
+  async onRegisterPressed(){
     var pattern =/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     var pattern2 = /^([a-zA-Z0-9_\.\-])+\+([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
@@ -48,7 +48,7 @@ class registerView extends Component{
             alert("Name can't be blank");
 
           }else{
-            if (this.state.password == "" || this.state.password.length<=6) {
+            if (this.state.password == "" || this.state.password.length<6) {
                 alert("Password can't be blank & length >= 6");
 
             }else{
@@ -62,10 +62,45 @@ class registerView extends Component{
                         alert("Passwords do not match");
 
                     }else {
-                      var accessToken = this.state.email + " - "
-                      + this.state.name + " - "
-                      + this.state.password;
-                      this.redirect('home',accessToken);
+                      let formdata = new FormData();
+                      formdata.append("TaiKhoan", this.state.name);
+                      formdata.append("MatKhau", this.state.password);
+                      try {
+                        let response = await fetch('http://4ship.esy.es/api/dangky_shipper.php',{
+                          method: 'post',
+                          headers: {
+                          'Content-Type': 'multipart/form-data',
+                          },
+                          body: formdata
+                        });
+                        let res = await response.text();
+                        var jsonResponse = JSON.parse(res);
+                        this.setState({
+                          code: jsonResponse['code'],
+                           message: jsonResponse['message'],
+                           result: jsonResponse['result']
+
+                        });
+
+
+                        if (response.status >= 200 && response.status < 300 && jsonResponse['code']==0) {
+                            //Handle success
+                            let accessToken = res;
+                            console.log(this.state.code + " " + this.state.message + " " + this.state.result);
+                            //On success we will store the access_token in the AsyncStorage
+                          //  this.storeToken(accessToken);
+                            this.redirect('home',this.state.result);
+                        } else {
+                            //Handle error
+                            alert("Please try again!")
+                            let error = res;
+                            throw error;
+                        }
+                      } catch(error) {
+                          this.setState({error: error});
+                          console.log("error " + error);
+                          this.setState({showProgress: false});
+                      }
                     }
                 }
               }
