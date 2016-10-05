@@ -7,6 +7,9 @@ const Register = require('./components/registerView.js')
 const Login = require('./components/loginView.js')
 const Root = require('./components/rootView.js')
 const Home = require('./components/homeView.js')
+const Admin = require('./components/adminView.js')
+const Info = require('./components/infoView.js')
+const Add = require('./components/addView.js')
 class Project11 extends Component{
 
   renderScene(route, navigator){
@@ -22,13 +25,22 @@ class Project11 extends Component{
     if(route.name == 'home'){
       return <Home navigator = {navigator} {...route.passProps} />
     }
+    if(route.name == 'admin'){
+      return <Admin navigator = {navigator} {...route.passProps} />
+    }
+    if(route.name == 'info'){
+      return <Info navigator = {navigator} {...route.passProps} />
+    }
+    if(route.name == 'add'){
+      return <Add navigator = {navigator} {...route.passProps} />
+    }
   }
 
   render(){
     return(
       <View style={style.container}>
         <Navigator
-          initialRoute={{name: 'root'}}
+          initialRoute={{name: 'admin'}}
           renderScene={this.renderScene.bind(this)}
         />
       </View>

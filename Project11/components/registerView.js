@@ -7,7 +7,9 @@ import{
   StyleSheet,
   Alert,
   Image,
-  TextInput
+  TextInput,
+  Dimensions,
+  ScrollView
 }from 'react-native';
 
 class registerView extends Component{
@@ -21,11 +23,12 @@ class registerView extends Component{
       errors: []
     };
   }
-  redirect(routeName, token){
+  redirect(routeName, token, message){
     this.props.navigator.replace({
       name: routeName,
       passProps: {
-        accessToken: token
+        accessToken: token,
+        message: message
       }
     })
   }
@@ -63,10 +66,11 @@ class registerView extends Component{
 
                     }else {
                       let formdata = new FormData();
-                      formdata.append("TaiKhoan", this.state.name);
-                      formdata.append("MatKhau", this.state.password);
+                      formdata.append("username", this.state.name);
+                      formdata.append("password", this.state.password);
+                      formdata.append("email", this.state.email);
                       try {
-                        let response = await fetch('http://4ship.esy.es/api/dangky_shipper.php',{
+                        let response = await fetch('http://chienduong.esy.es/api/register.php',{
                           method: 'post',
                           headers: {
                           'Content-Type': 'multipart/form-data',
@@ -83,16 +87,20 @@ class registerView extends Component{
                         });
 
 
-                        if (response.status >= 200 && response.status < 300 && jsonResponse['code']==0) {
+                        if (response.status >= 200
+                          && response.status < 300
+                          && jsonResponse['code']==0) {
                             //Handle success
                             let accessToken = res;
-                            console.log(this.state.code + " " + this.state.message + " " + this.state.result);
+                            console.log(this.state.code
+                              + " " + this.state.message
+                            + " " + this.state.result);
                             //On success we will store the access_token in the AsyncStorage
                           //  this.storeToken(accessToken);
-                            this.redirect('home',this.state.result);
+                            this.redirect('home',this.state.result, this.state.message);
                         } else {
                             //Handle error
-                            alert("Please try again!")
+                            alert(this.state.message);
                             let error = res;
                             throw error;
                         }
@@ -109,13 +117,14 @@ class registerView extends Component{
         }
 
       }
-
-
-
-}
+  }
   render(){
     return(
-
+      <Image
+      style={{flex:1}}
+        source={{uri: 'https://s-media-cache-ak0.pinimg.com/736x/c8/76/1f/c8761f6c880ad26c15a96e3689cf26ec.jpg'}}
+       >
+       <ScrollView>
       <View style={style.container}>
       <Text style={style.title}>Register</Text>
       <TextInput onChangeText={(val) => this.setState({email: val})}
@@ -132,6 +141,7 @@ class registerView extends Component{
         style={style.input} placeholder="Confirm Password"
         secureTextEntry = {true}
       />
+
       <Text>{this.state.errors}</Text>
 
         <TouchableOpacity style={style.button} onPress={this.onRegisterPressed.bind(this,'home')}>
@@ -140,7 +150,10 @@ class registerView extends Component{
         <TouchableOpacity style={style.button} onPress={this.redirect.bind(this,'root')}>
           <Text style={style.textButton}>Cancel</Text>
         </TouchableOpacity>
+
       </View>
+      </ScrollView>
+      </Image>
     );
   }
 
@@ -159,12 +172,14 @@ const style = StyleSheet.create({
       padding: 4,
       fontSize: 18,
       borderWidth: 1,
-      borderColor: '#48bbec'
+      borderColor: 'white'
     },
     button: {
-      width:200,
-      height:30,
-      backgroundColor: '#3498db',
+      width:300,
+      height:50,
+      borderColor: 'white',
+      borderWidth: 1,
+      borderRadius: 30,
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: 10,
