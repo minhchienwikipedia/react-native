@@ -32,6 +32,14 @@ class registerView extends Component{
       }
     })
   }
+  onBack(routeName){
+    this.props.navigator.pop({
+      name: routeName,
+      passProps: {
+
+      }
+    })
+  }
 
   async onRegisterPressed(){
     var pattern =/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -125,6 +133,9 @@ class registerView extends Component{
         source={{uri: 'https://s-media-cache-ak0.pinimg.com/736x/c8/76/1f/c8761f6c880ad26c15a96e3689cf26ec.jpg'}}
        >
        <ScrollView>
+       <TouchableOpacity style={style.back} onPress={this.onBack.bind(this,'root')}>
+         <Image style={{height:20,width:20}} source={{uri:'http://www.galtane.com/static/img/left.png'}}/>
+       </TouchableOpacity>
       <View style={style.container}>
       <Text style={style.title}>Register</Text>
       <TextInput onChangeText={(val) => this.setState({email: val})}
@@ -141,14 +152,8 @@ class registerView extends Component{
         style={style.input} placeholder="Confirm Password"
         secureTextEntry = {true}
       />
-
-      <Text>{this.state.errors}</Text>
-
         <TouchableOpacity style={style.button} onPress={this.onRegisterPressed.bind(this,'home')}>
           <Text style={style.textButton}>Register</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={style.button} onPress={this.redirect.bind(this,'root')}>
-          <Text style={style.textButton}>Cancel</Text>
         </TouchableOpacity>
 
       </View>
@@ -163,7 +168,12 @@ const style = StyleSheet.create({
     container: {
       flex: 1,
       alignItems: 'center',
-      padding:30
+      paddingLeft:30,
+      paddingRight:30
+    },
+    back: {
+      marginTop: 15,
+      marginLeft:10,
     },
     input:{
       width:300,

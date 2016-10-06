@@ -18,7 +18,7 @@ class loginView extends Component{
     this.state = {
       email: "",
       password: "",
-      message: ""
+      errors: ""
     };
   }
   redirect(routeName, token,message){
@@ -27,18 +27,23 @@ class loginView extends Component{
       passProps: {
         accessToken: token,
         message: message
+
+      }
+    })
+  }
+
+  onBack(routeName){
+    this.props.navigator.pop({
+      name: routeName,
+      passProps: {
+
       }
     })
   }
   async onLoginPressed(){
 
-
-    if(this.state.username==""){
-      alert("Email can't be blank");
-    }else{
-
         if (this.state.password == "" || this.state.password.length<6) {
-            alert("Password can't be blank & length >= 6");
+            alert("Username & Password can't be blank & Password length >= 6");
         }else{
 
               let formdata = new FormData();
@@ -60,10 +65,12 @@ class loginView extends Component{
                    message: jsonResponse['message'],
                    result: jsonResponse['result'],
                    id: jsonResponse['result']['id'],
-                   author: jsonResponse['result']['authorities']
+                   author: jsonResponse['result']['authorities'],
+                   errors: jsonResponse['message'],
+                   username: jsonResponse['result']['username']
                 });
 
-
+                console.log(this.state.message);
 
                 if (response.status >= 200 && response.status < 300 && jsonResponse['code']==0) {
                     //Handle success
@@ -74,24 +81,27 @@ class loginView extends Component{
                     //On success we will store the access_token in the AsyncStorage
                   //  this.storeToken(accessToken);
                   if(this.state.author == 1){
-                    this.redirect('admin',this.state.id, this.state.message);
+                    this.redirect('admin',this.state.username, this.state.message);
                   }else {
-                    this.redirect('home',this.state.id, this.state.message);
+                    this.redirect('home',this.state.username, this.state.message);
                   }
 
                 } else {
                     //Handle error
-                    let error = res;
+                    alert(this.state.message);
+
+                    let error = this.state.message;
                     throw error;
                 }
               } catch(error) {
                   this.setState({error: error});
                   console.log("error " + error);
+                 alert("Username or Password is wrong!");
                   this.setState({showProgress: false});
               }
         }
 
-    }
+
 
   }
   render(){
@@ -101,6 +111,9 @@ class loginView extends Component{
         source={{uri: 'https://s-media-cache-ak0.pinimg.com/736x/c8/76/1f/c8761f6c880ad26c15a96e3689cf26ec.jpg'}}
        >
        <ScrollView>
+       <TouchableOpacity style={style.back} onPress={this.onBack.bind(this,'root')}>
+         <Image style={{height:20,width:20}} source={{uri:'http://www.galtane.com/static/img/left.png'}}/>
+       </TouchableOpacity>
       <View style={style.container}>
       <Text style={style.title}>Login</Text>
       <TextInput onChangeText={(val) => this.setState({username: val})}
@@ -113,9 +126,6 @@ class loginView extends Component{
 
         <TouchableOpacity style={style.button} onPress={this.onLoginPressed.bind(this)}>
           <Text style={style.textButton}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={style.button} onPress={this.redirect.bind(this,'root')}>
-          <Text style={style.textButton}>Cancel</Text>
         </TouchableOpacity>
       </View>
       </ScrollView>
@@ -130,6 +140,11 @@ const style = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       padding:30
+    },
+
+    back: {
+      marginTop: 15,
+      marginLeft:10,
     },
     input:{
       width:300,

@@ -21,12 +21,11 @@ class addView extends Component{
       errors: []
     };
   }
-  redirect(routeName, token, message){
+  redirect(routeName){
     this.props.navigator.replace({
       name: routeName,
       passProps: {
-        accessToken: token,
-        message: message
+
       }
     })
   }
@@ -100,7 +99,8 @@ class addView extends Component{
                               + " " + this.state.result);
                               //On success we will store the access_token in the AsyncStorage
                             //  this.storeToken(accessToken);
-                              this.redirect('admin',this.state.result, this.state.message);
+                            alert(this.state.message);
+                              this.redirect('admin');
                           } else {
                               //Handle error
                               alert(this.state.message);

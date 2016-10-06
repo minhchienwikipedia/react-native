@@ -21,7 +21,7 @@ class loginView extends Component{
   }
 
   navigate(routeName){
-    this.props.navigator.replace({
+    this.props.navigator.push({
       name: routeName
     })
   }

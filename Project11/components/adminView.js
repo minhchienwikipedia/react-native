@@ -24,7 +24,6 @@ class adminView extends Component{
       rovers: []
     }
   }
-
   componentDidMount(){
     this.fetchData();
   }
@@ -45,22 +44,7 @@ class adminView extends Component{
       name: routeName
     })
   }
-  onEdit(){
 
-  }
-
-  onDelete(){
-    Alert.alert(
-      'Delete',
-      'You sure you want to delete?',
-      [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-      ]
-    );
-    console.log(this.state.dataSource);
-
-  }
   renderData(data){
     return(
       <TouchableOpacity onPress={()=>this.onItemPressed(data)}>
@@ -68,26 +52,7 @@ class adminView extends Component{
       <View style={style.listview}>
         <Text style={style.id}>ID: {data.id}</Text>
         <Text style={style.username}>Username: {data.username}</Text>
-        <View style={style.action}>
-        <View style={{flex:1}}>
-        <TouchableOpacity onPress={()=>this.onEdit.bind(this)}>
-        <Image
-        style={{width:20,height:20}}
-          source={{uri: 'https://sharpsnippets.files.wordpress.com/2013/12/editsvg.png'}}
-         />
-          <Text style={style.textButton}>Edit</Text>
-        </TouchableOpacity>
-        </View>
-        <View style={{flex:1}}>
-        <TouchableOpacity onPress={this.onDelete.bind(this)}>
-        <Image
-        style={{width:20,height:20}}
-          source={{uri: 'http://www.endlessicons.com/wp-content/uploads/2012/12/trash-icon.png'}}
-         />
-          <Text style={style.textButton}>Delete</Text>
-        </TouchableOpacity>
-        </View>
-        </View>
+
       </View>
       </TouchableOpacity>
     )
@@ -109,8 +74,8 @@ class adminView extends Component{
         source={{uri: 'https://s-media-cache-ak0.pinimg.com/736x/c8/76/1f/c8761f6c880ad26c15a96e3689cf26ec.jpg'}}
        >
       <View style={style.container}>
-        <Text style={style.title}>Hello Admin</Text>
-        <Text style={style.text}>You are {this.state.accessToken}  {this.state.message}</Text>
+        <Text style={style.title}>Hello {this.state.accessToken}</Text>
+        <Text style={style.text}> {this.state.message}</Text>
         <ListView
           style={{flex:1}}
           dataSource={this.state.dataSource}
@@ -138,11 +103,6 @@ const style = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       padding:30
-    },
-    action: {
-      flex:1,
-      flexDirection: 'row',
-      alignItems: 'center'
     },
     id: {
       fontSize: 20,
