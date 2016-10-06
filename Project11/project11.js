@@ -40,7 +40,7 @@ class Project11 extends Component{
     return(
       <View style={style.container}>
         <Navigator
-          initialRoute={{name: 'admin'}}
+          initialRoute={{name: 'root'}}
           renderScene={this.renderScene.bind(this)}
         />
       </View>
