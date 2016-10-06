@@ -14,6 +14,7 @@ import{
 var w = Dimensions.get('window').width;
 class infoView extends Component{
   constructor(props){
+    // declare variable and pass parameters
     super(props);
     console.log(this.props.data);
     this.state={
@@ -25,7 +26,7 @@ class infoView extends Component{
       edit: false,
     }
   }
-
+  // moving screen
   redirect(routeName, token,message){
     this.props.navigator.replace({
       name: routeName,
@@ -63,12 +64,14 @@ class infoView extends Component{
                           alert("Authorities is only filled 0(user) or 1(admin)");
 
                         }else{
+                          // declare data to save variable
                           let formdata = new FormData();
                           formdata.append("id", this.state.data.id);
                           formdata.append("email", this.state.email);
                           formdata.append("password", this.state.password);
                           formdata.append("authorities", this.state.authorities);
                           try {
+                            // connect with service
                             let response = await fetch('http://chienduong.esy.es/api/update.php',{
                               method: 'post',
                               headers: {
@@ -87,13 +90,6 @@ class infoView extends Component{
                             if (response.status >= 200
                               && response.status < 300
                               && jsonResponse['code']==0) {
-                                //Handle success
-                                let accessToken = res;
-                                console.log(this.state.code
-                                  + " " + this.state.message
-                                + " " + this.state.result);
-                                //On success we will store the access_token in the AsyncStorage
-                              //  this.storeToken(accessToken);
                               alert(this.state.message);
                                 this.redirect('admin');
                             } else {
@@ -103,10 +99,7 @@ class infoView extends Component{
                                 throw error;
                             }
                           } catch(error) {
-                              this.setState({error: error});
-                              console.log("error " + error);
                               alert('Nothing change.!')
-                              this.setState({showProgress: false});
                           }
                         }
                       }
@@ -125,6 +118,7 @@ class infoView extends Component{
   }
 
   async pressdelete(){
+    // put id to data to delete
     let formdata = new FormData();
     formdata.append("id", this.state.data.id);
     try {

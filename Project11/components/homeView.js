@@ -11,18 +11,16 @@ import{
   Dimensions
 }from 'react-native';
 
-const ACCESS_TOKEN = 'access_token';
-
 class homeView extends Component{
+  // declare variable
   constructor(props){
     super(props);
     this.state={
       accessToken: this.props.accessToken,
-      message: this.props.message,
-      rovers: []
+      message: this.props.message
     }
   }
-
+// moving screen
   navigate(routeName){
     this.props.navigator.replace({
       name: routeName

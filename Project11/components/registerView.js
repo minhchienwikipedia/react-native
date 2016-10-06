@@ -45,7 +45,7 @@ class registerView extends Component{
     var pattern =/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     var pattern2 = /^([a-zA-Z0-9_\.\-])+\+([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-      // check giá trị
+      // check value
       if (this.state.email == "") {
         alert("Email can't be blank");
 
@@ -98,13 +98,8 @@ class registerView extends Component{
                         if (response.status >= 200
                           && response.status < 300
                           && jsonResponse['code']==0) {
-                            //Handle success
-                            let accessToken = res;
-                            console.log(this.state.code
-                              + " " + this.state.message
-                            + " " + this.state.result);
-                            //On success we will store the access_token in the AsyncStorage
-                          //  this.storeToken(accessToken);
+                            // show alert & moving screen
+                            alert(this.state.message);
                             this.redirect('home',this.state.result, this.state.message);
                         } else {
                             //Handle error
@@ -113,9 +108,7 @@ class registerView extends Component{
                             throw error;
                         }
                       } catch(error) {
-                          this.setState({error: error});
-                          console.log("error " + error);
-                          this.setState({showProgress: false});
+                          alert("Something wrong. Please try again.!");
                       }
                     }
                 }

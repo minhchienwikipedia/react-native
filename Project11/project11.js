@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import{
   View, Text,StyleSheet,Navigator
 } from 'react-native';
-
+// declare components
 const Register = require('./components/registerView.js')
 const Login = require('./components/loginView.js')
 const Root = require('./components/rootView.js')
@@ -11,7 +11,7 @@ const Admin = require('./components/adminView.js')
 const Info = require('./components/infoView.js')
 const Add = require('./components/addView.js')
 class Project11 extends Component{
-
+// declare navigator and condition navigator
   renderScene(route, navigator){
     if(route.name == 'root'){
       return <Root navigator = {navigator}/>
