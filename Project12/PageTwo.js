@@ -27,7 +27,7 @@ export default class PageTwo extends Component{
         </View>
         <ActionButton buttonColor="rgba(231,76,60,1)">
           <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
-            <Icon name="md-bus" style={styles.actionButtonIcon} />
+            <Icon name="md-flag" size={30} color="#900" />
           </ActionButton.Item>
         </ActionButton>
       </View>
